@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import ClippedDrawer from "./components/Drawer";
+import {ThemeProvider, createTheme} from '@material-ui/core/styles';
+const theme = createTheme({
+  palette: 
+  {
+      primary: 
+      {
+          main: '#ef6694',
+      },
+      secondary: 
+      {
+        main: '#bb6bc9',
+      },
+      error:
+      {
+        main: '#d32f2f',
+      },
+      warning:
+      {
+        main: '#ff9800',
+      },
+      info:
+      {
+        main: '#64b5f6',
+      },
+  },
+});
 
-function App() {
+const App = () => 
+{
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <ThemeProvider theme={theme}>
+      <ClippedDrawer />
+    </ThemeProvider>
+    </>
   );
 }
-
 export default App;
