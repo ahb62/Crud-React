@@ -1,12 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {Drawer, CssBaseline, AppBar, Toolbar, List, Typography, Divider, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import TableProducts from './TableProducts';
+import {Drawer, CssBaseline, AppBar, Toolbar, List, Typography, Divider, ListItem, ListItemText} from '@material-ui/core';
 import Dropdown from './Dropdown';
 import FormDialog from './FormDialog';
-
+import {Link} from 'react-router-dom'
 const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
@@ -39,11 +36,16 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         padding: theme.spacing(3),
     },
+    cleaning:
+    {
+      textDecoration: "none",
+      color: "white",
+    }
 }));
 
-export default function PermanentDrawerLeft() {
+export const ComponentDrawer = () => 
+{
   const classes = useStyles();
-
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -66,22 +68,17 @@ export default function PermanentDrawerLeft() {
         </div>
         <Divider />
         <List>
-          {['Profile', 'Logout'].map((text, index) => (
+          <Link to="/tasks-view">
+          {['Tasks'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <AccountCircleIcon fontSize="large" color="info" /> : <ExitToAppIcon color="warning" fontSize="large"/>}</ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={text} className={classes.cleaning} />
             </ListItem>
           ))}
+          </Link>
         </List>
         <Divider />
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Typography>    
-            <TableProducts />
-        </Typography>
         <FormDialog />
-      </main>
     </div>
   );
 }

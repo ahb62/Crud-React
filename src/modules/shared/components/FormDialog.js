@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Fab, Tooltip} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import useStyles from '../styles/styles'
+import useStyles from '../../../styles/styles'
 
 const FormDialog = () => 
 {

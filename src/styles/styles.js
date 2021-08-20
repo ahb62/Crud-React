@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) =>
     {
         color: "white",
     },
+    accountCircleIcon:
+    {
+        paddingRight: "5px",
+    },
     content: 
     {
         flexGrow: 1,
