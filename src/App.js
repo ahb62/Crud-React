@@ -1,8 +1,12 @@
 /* import ClippedDrawer from "./components/Drawer"; */
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import {TasksView} from "./modules/tasks/TasksView";
 import {WelcomeView} from "./modules/tasks/WelcomeView";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {ThemeProvider, createTheme} from '@material-ui/core/styles';
+import {ComponentDrawer} from './modules/shared/components/Drawer';
+import  EditDialog  from './modules/shared/components/EditDialog';
 
 const theme = createTheme({
   palette: 
@@ -24,12 +28,39 @@ const theme = createTheme({
 
 const App = () => 
 {
-  return (
+const [tasks, setTasks] = useState([]);
+const [triggerTasks, setTriggering ] = useState(true);
+useEffect(() => {
+  if(triggerTasks === true) 
+    {
+      const reqApi = async () => 
+      {
+        const result = await axios.get('http://localhost:3001/tasks');
+        setTasks(result.data); 
+      }
+      reqApi();
+    }
+    setTriggering(false);
+}, [triggerTasks]);
+return (
     <>
     <Router>
     <ThemeProvider theme={theme}>
+      <ComponentDrawer />
       <Switch>
-        <Route exact path="/tasks-view" component={TasksView} />
+        <Route exact path="/tasks/edit/:id" component={EditDialog}/> 
+
+          <Route exact path="/tasks" render={(props) => 
+            {
+              const idTask = parseInt(props.match.params.id);
+              const task = tasks.filter(element => element.id === idTask);
+              console.log(idTask);
+              return(
+                <TasksView tasks={tasks} task={task} setTriggering={setTriggering}  />
+              )
+            }} />
+
+
         <Route exact path="/" component={WelcomeView} />
       </Switch>
     </ThemeProvider>
@@ -38,3 +69,4 @@ const App = () =>
   );
 }
 export default App;
+ 

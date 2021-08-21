@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) =>
     /* styles for Tooltip */
     absolute: 
     {
-        position: 'absolute',
+        position: 'fixed',
         bottom: theme.spacing(2),
         right: theme.spacing(3),
     },

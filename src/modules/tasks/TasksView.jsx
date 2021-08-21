@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {TableTasks} from './components/TableTasks';
 import {ComponentDrawer} from '../shared/components/Drawer';
 import FormDialog from '../shared/components/FormDialog';
@@ -18,11 +18,10 @@ const useStyles = makeStyles((theme) =>
         padding: theme.spacing(3),
     },
 }));
-export const TasksView = () => 
+export const TasksView = (props) => 
 {
-    
+    const {tasks, task, setTriggering} = props;
     const classes = useStyles();
-    const [tasks, setTasks] = useState([]);
     return(
         <>
         <div className={classes.root}>
@@ -30,10 +29,10 @@ export const TasksView = () =>
         <main className={classes.content}>
         <div className={classes.toolbar} />
             <h1>Task List</h1>
-            <TableTasks />
-        <FormDialog defaultData={console.log} />
+            <TableTasks tasks={tasks} task={task[0]}  setTriggering={setTriggering}  />
         </main>
         </div>
+        <FormDialog defaultData={console.log} setTriggering={setTriggering} />
         </>
     )
 };

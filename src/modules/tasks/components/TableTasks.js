@@ -11,20 +11,10 @@ const StyledTableRow = withStyles((theme) => ({
     },
   },
 }))(TableRow);
-
-const createData = (taskName, priorityLevel, completed) => {return{taskName, priorityLevel, completed}}
-const creatingRows = 
-[
-    createData("Task 1", "High", true,),
-    createData("Task 2", "Mid", false,),
-    createData("Task 3", "Low", true,),
-    createData("Task 4", "High", false,),
-    createData("Task 5", "Mid", true, )
-];
-
-
-export const TableTasks = (CreatingRows, deleteRows) =>
+ 
+export const TableTasks = (props) =>
 {
+  const {tasks, task, setTriggering} = props;
   const styles = useStyles();
   return (
       <>  
@@ -39,15 +29,15 @@ export const TableTasks = (CreatingRows, deleteRows) =>
           </TableRow>
         </TableHead>
         <TableBody>
-          {creatingRows.map((row) => (
-              <StyledTableRow key={row.taskName}>
+           {tasks.map((row) => (
+              <StyledTableRow key={row.id}>
               <TableCell component="th" scope="row">
                 {row.taskName}
               </TableCell>
               <TableCell>{row.priorityLevel}</TableCell>
-              <TableCell>{row.completed.toString()}</TableCell>
+              <TableCell>{row.completed}</TableCell>
               <TableCell>
-                <TableButtons />
+                <TableButtons tasks={tasks} task={task} setTriggering={setTriggering} />
               </TableCell>
             </StyledTableRow>
           ))}

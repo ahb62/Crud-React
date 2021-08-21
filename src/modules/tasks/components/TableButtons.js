@@ -1,19 +1,15 @@
-import DeleteOutlineSharpIcon from '@material-ui/icons/DeleteOutlineSharp';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import {IconButton} from '@material-ui/core/';
-/* import useStyles from '../styles/styles'; */
-const TableButtons = () =>
+
+import { DeleteDialog } from '../../shared/components/DeleteDialog';
+import {Link} from 'react-router-dom';
+import  EditDialog  from '../../shared/components/EditDialog';
+const TableButtons = (props) =>
 {
-/*     const styles = useStyles(); */
+    const {tasks, task, setTriggering} = props;
     return(
         <>
-            <IconButton size="small">
-                <EditOutlinedIcon />
-            </IconButton>
-            <IconButton size="small">
-            <DeleteOutlineSharpIcon />
-            </IconButton>
-        </>
+        <DeleteDialog />
+        <EditDialog task={task[0]} setTriggering={setTriggering}/>
+            </>
     )
 }
 export default TableButtons;

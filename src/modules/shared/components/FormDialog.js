@@ -2,19 +2,40 @@ import React, {useState} from 'react';
 import {Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Fab, Tooltip} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import useStyles from '../../../styles/styles'
+import axios from 'axios';
 
-const FormDialog = () => 
+const FormDialog = ({setTriggering}) => 
 {
+  /*  */
   const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
+  const handleClickOpen = () => {setOpen(true)}; 
+  const handleClose = () => {setOpen(false)};
+  /*  */
+  const [taskName, saveTasksName] = useState("");
+  const [priorityLevel, savePriorityLevel] = useState("");
+  const handleSubmit = async (event) =>
+  { 
+    event.preventDefault();
+    console.log("you clicked on create!", taskName, priorityLevel);
+    try 
+    {
+      const result = await axios.post('http://localhost:3001/tasks', 
+      { 
+        taskName,
+        priorityLevel,
+      });
+      if(result.status === 201)
+        {console.log("has posteado correctamente en tu api")}
+    } catch (error) 
+      {
+        console.log(error);
+        console.log("has tenido un error!");
+      }
+      setTriggering(true);
+  }
+       
+      
+      
   const styles = useStyles();
   return (
     <>
@@ -24,36 +45,33 @@ const FormDialog = () =>
         </Fab>
       </Tooltip>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Add a Product</DialogTitle>
+      <form onSubmit={handleSubmit}>
+        <DialogTitle id="form-dialog-title">Add Task:</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
-            id="name"
-            label="Name"
-            type="email"
+            id="taskName"
+            label="Task Name"
+            type="text"
             fullWidth
-          />
+            onChange={e => saveTasksName(e.target.value)}
+            />
           <TextField
             margin="dense"
-            id="type"
-            label="Type"
-            type="email"
+            id="priorityLevel"
+            label="Priority"
+            type="text"
             fullWidth
-          />
-          <TextField
-            margin="dense"
-            id="brand"
-            label="Brand"
-            type="email"
-            fullWidth
-          />
+            onChange={e => savePriorityLevel(e.target.value)}
+            />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} type="submit" color="primary">
             Create
           </Button>
         </DialogActions>
+      </form> 
       </Dialog>
     </>
   );

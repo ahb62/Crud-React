@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Drawer, CssBaseline, AppBar, Toolbar, List, Typography, Divider, ListItem, ListItemText} from '@material-ui/core';
 import Dropdown from './Dropdown';
-import FormDialog from './FormDialog';
 import {Link} from 'react-router-dom'
 const drawerWidth = 200;
 
@@ -68,7 +67,7 @@ export const ComponentDrawer = () =>
         </div>
         <Divider />
         <List>
-          <Link to="/tasks-view">
+          <Link to="/tasks">
           {['Tasks'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemText primary={text} className={classes.cleaning} />
@@ -78,7 +77,7 @@ export const ComponentDrawer = () =>
         </List>
         <Divider />
       </Drawer>
-        <FormDialog />
+
     </div>
   );
 }
