@@ -29,7 +29,7 @@ export const TasksView = (props) =>
         <main className={classes.content}>
         <div className={classes.toolbar} />
             <h1>Task List</h1>
-            <TableTasks tasks={tasks} task={task[0]}  setTriggering={setTriggering}  />
+            <TableTasks tasks={tasks} task={task} setTriggering={setTriggering}  />
         </main>
         </div>
         <FormDialog defaultData={console.log} setTriggering={setTriggering} />

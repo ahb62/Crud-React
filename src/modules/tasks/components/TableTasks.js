@@ -12,9 +12,8 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
  
-export const TableTasks = (props) =>
+export const TableTasks = ({tasks, task, setTriggering}) =>
 {
-  const {tasks, task, setTriggering} = props;
   const styles = useStyles();
   return (
       <>  
@@ -37,7 +36,7 @@ export const TableTasks = (props) =>
               <TableCell>{row.priorityLevel}</TableCell>
               <TableCell>{row.completed}</TableCell>
               <TableCell>
-                <TableButtons tasks={tasks} task={task} setTriggering={setTriggering} />
+                <TableButtons tasks={tasks} idTask={row.id} task={task} setTriggering={setTriggering} />
               </TableCell>
             </StyledTableRow>
           ))}

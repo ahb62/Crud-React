@@ -1,15 +1,16 @@
 import React, {useState, useRef} from 'react';
 import {Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, IconButton} from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import axios from 'axios'; 
+import axios from 'axios';
+import {useHistory, withRouter} from 'react-router-dom';
 
 const EditDialog = (props) => 
 {
+  let history = useHistory();
   /* Manejando los props */
-  const {history, task, setTriggering} = props;
-  console.log(task);
-  const priorityLevelRef = useRef("");
-  const taskNameRef = useRef("");
+  const {idTask, tasks, setTriggering} = props;
+  const priorityLevelRef = useRef('');
+  const taskNameRef = useRef('');
   /* Manejador del dialog  */
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {setOpen(true)}; 
@@ -19,23 +20,23 @@ const EditDialog = (props) =>
   const handleSubmit = async (event) =>
   { 
     event.preventDefault();
-    console.log("you clicked on edit!", task);
-    const newPriorityLevelRef = taskNameRef.current.value;
-    const newTaskNameRef = priorityLevelRef.current.value;
+    console.log("you clicked on edit!", idTask);
+    const newTaskNameRef = taskNameRef.current.value;
+    const newPriorityLevelRef = priorityLevelRef.current.value;
     
-    const editTask = {taskName: newTaskNameRef, priorityLevel: newPriorityLevelRef};
-    const url = `http://localhost:3001/tasks/${task.id}`;
+    const editTask = {priorityLevel: newPriorityLevelRef, taskName: newTaskNameRef,};
+    const url = `http://192.168.1.104:3001/tasks/${idTask}`;
     try
     {
       const result = await axios.put(url, editTask);
       if(result.status === 200)
-        {console.log("has editado correctamente en tu api")}
+        {console.log("has editado correctamente en tu api", editTask)}
+        setTriggering(true);
     } catch (error) 
       {
         console.log(error);
         console.log("has tenido un error!");
       }
-      setTriggering(true);
       history.push('/tasks');
   }
 
@@ -52,7 +53,8 @@ const EditDialog = (props) =>
                     margin="dense"
                     label="Task Name"
                     type="text"
-                    ref={taskNameRef}
+                    inputRef={taskNameRef}
+                    defaultValue={tasks.taskName}
                     fullWidth
                     />
                 <TextField
@@ -60,7 +62,8 @@ const EditDialog = (props) =>
                     id="priorityLevel"
                     label="Priority"
                     type="text"
-                    ref={priorityLevelRef}
+                    inputRef={priorityLevelRef}
+                    defaultValue={tasks.priorityLevel}
                     fullWidth
                     />
                 </DialogContent>
@@ -75,4 +78,4 @@ const EditDialog = (props) =>
     </>
   );
 }
-export default EditDialog;
+export default withRouter(EditDialog);

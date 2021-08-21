@@ -1,64 +1,14 @@
 {
   "tasks": [
     {
-      "taskName": "Task 1",
-      "priorityLevel": "Max",
-      "completed": "false",
-      "id": 1
-    },
-    {
-      "taskName": "Task 2",
-      "priorityLevel": "High",
-      "completed": "true",
+      "priorityLevel": "MAX",
+      "taskName": "Resolviendo Delete",
       "id": 2
     },
     {
-      "taskName": "Task 3",
-      "priorityLevel": "Mid",
-      "completed": "false",
-      "id": 3
-    },
-    {
-      "taskName": "Task 4",
-      "priorityLevel": "Low",
-      "completed": "true",
-      "id": 4
-    },
-    {
-      "taskName": "Task 5",
-      "priorityLevel": "Max",
-      "completed": "false",
-      "id": 5
-    },
-    {
-      "taskName": "Task 6",
-      "priorityLevel": "High",
-      "completed": "true",
-      "id": 6
-    },
-    {
-      "id": 7,
-      "completed": "false",
-      "taskName": "Task 7",
-      "priorityLevel": "Mid"
-    },
-    {
-      "taskName": "Coding Test",
-      "priorityLevel": "Max",
-      "completed": true,
-      "id": 8
-    },
-    {
-      "taskName": "search display",
-      "priorityLevel": "Mid",
-      "completed": true,
+      "taskName": "bb",
+      "priorityLevel": "a",
       "id": 9
-    },
-    {
-      "taskName": "aaaaa",
-      "priorityLevel": "aaaaaaa",
-      "completed": true,
-      "id": 10
     },
     {
       "taskName": "jaja",
@@ -67,22 +17,10 @@
       "id": 11
     },
     {
-      "taskName": "a ver ahora",
-      "priorityLevel": "capaz lo logré",
-      "completed": "",
-      "id": 12
-    },
-    {
       "taskName": "Jaja",
       "priorityLevel": "yes",
       "completed": "",
       "id": 13
-    },
-    {
-      "taskName": "hello ",
-      "priorityLevel": "world",
-      "completed": "",
-      "id": 14
     },
     {
       "taskName": "Editing tasks",
@@ -90,9 +28,9 @@
       "id": 15
     },
     {
-      "taskName": "aaa",
-      "priorityLevel": "b",
-      "id": 16
+      "taskName": "Delete Resuelto",
+      "priorityLevel": "Congratulations",
+      "id": 17
     }
   ]
 }

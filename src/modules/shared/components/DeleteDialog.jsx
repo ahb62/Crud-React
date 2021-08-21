@@ -1,15 +1,37 @@
-import React from 'react';
+import React, {useState} from 'react';
+import axios from 'axios';
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton} from '@material-ui/core';
 import DeleteOutlineSharpIcon from '@material-ui/icons/DeleteOutlineSharp';
-
-export const DeleteDialog = ({tasks}) =>
+import {useHistory} from 'react-router-dom';
+export const DeleteDialog = ({idTask, tasks, task, setTriggering}) =>
 {
-  const [open, setOpen] = React.useState(false);
-
+  let history = useHistory();
+  const [open, setOpen] = useState(false);
+  const [idRow, setDeletingIdRow] = useState(idTask);
+/* Handling the  */
   const handleClickOpen = () => {
-    setOpen(true);
-    console.log("You clicked on delete task");
+    setOpen(true)
   };
+
+  const handleDeleting = async () => 
+  {
+      try
+      {
+        const url = `http://192.168.1.104:3001/tasks/${idTask}`;
+        const handlingDelete = await axios.delete(url);
+        if(handlingDelete.status === 200)
+        {
+          console.log("this request work!");
+        }
+      } catch (error)
+      {
+        console.log(error);
+        
+      }
+    setTriggering(true);
+    setOpen(false)
+    history.push('/tasks');
+  }
 
   const handleClose = () => {
     setOpen(false);
@@ -36,7 +58,7 @@ export const DeleteDialog = ({tasks}) =>
           <Button onClick={handleClose} color="primary">
             No
           </Button>
-          <Button onClick={handleClose} type="submit" color="primary" autoFocus>
+          <Button  type="submit" onClick={handleDeleting} color="primary" autoFocus>
             Yes
           </Button>
         </DialogActions>

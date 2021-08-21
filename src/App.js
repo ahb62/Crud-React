@@ -25,7 +25,7 @@ const theme = createTheme({
       },
   },
 });
-
+ 
 const App = () => 
 {
 const [tasks, setTasks] = useState([]);
@@ -35,7 +35,7 @@ useEffect(() => {
     {
       const reqApi = async () => 
       {
-        const result = await axios.get('http://localhost:3001/tasks');
+        const result = await axios.get('http://192.168.1.104:3001/tasks/');
         setTasks(result.data); 
       }
       reqApi();
@@ -48,15 +48,14 @@ return (
     <ThemeProvider theme={theme}>
       <ComponentDrawer />
       <Switch>
-        <Route exact path="/tasks/edit/:id" component={EditDialog}/> 
+        <Route exact path="/tasks/:id" component={EditDialog}/> 
 
           <Route exact path="/tasks" render={(props) => 
             {
               const idTask = parseInt(props.match.params.id);
               const task = tasks.filter(element => element.id === idTask);
-              console.log(idTask);
               return(
-                <TasksView tasks={tasks} task={task} setTriggering={setTriggering}  />
+                <TasksView tasks={tasks} task={task[0]} setTriggering={setTriggering}  />
               )
             }} />
 
