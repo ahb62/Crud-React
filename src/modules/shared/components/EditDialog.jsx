@@ -25,7 +25,7 @@ const EditDialog = (props) =>
     const newPriorityLevelRef = priorityLevelRef.current.value;
     
     const editTask = {priorityLevel: newPriorityLevelRef, taskName: newTaskNameRef,};
-    const url = `http://192.168.1.104:3001/tasks/${idTask}`;
+    const url = `http://localhost:3001/tasks/${idTask}`;
     try
     {
       const result = await axios.put(url, editTask);

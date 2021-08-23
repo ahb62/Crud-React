@@ -17,7 +17,7 @@ export const DeleteDialog = ({idTask, tasks, task, setTriggering}) =>
   {
       try
       {
-        const url = `http://192.168.1.104:3001/tasks/${idTask}`;
+        const url = `http://localhost:3001/tasks/${idTask}`;
         const handlingDelete = await axios.delete(url);
         if(handlingDelete.status === 200)
         {

@@ -1,35 +1,28 @@
 {
   "tasks": [
     {
-      "priorityLevel": "MAX",
-      "taskName": "Resolviendo Delete",
-      "id": 2
-    },
-    {
-      "taskName": "bb",
-      "priorityLevel": "a",
+      "priorityLevel": "High",
+      "taskName": "Editando Auth0",
       "id": 9
     },
     {
-      "taskName": "jaja",
-      "priorityLevel": "lo logré",
-      "completed": "",
+      "priorityLevel": "High",
+      "taskName": "Agregar 8base",
       "id": 11
     },
     {
-      "taskName": "Jaja",
-      "priorityLevel": "yes",
-      "completed": "",
+      "priorityLevel": "High",
+      "taskName": "Implementar Tests",
       "id": 13
     },
     {
-      "taskName": "Editing tasks",
-      "priorityLevel": "MAX",
-      "id": 15
+      "priorityLevel": "High",
+      "taskName": "Probando mi CRUD",
+      "id": 16
     },
     {
-      "taskName": "Delete Resuelto",
-      "priorityLevel": "Congratulations",
+      "taskName": "Probando mi CRUD",
+      "priorityLevel": "x2",
       "id": 17
     }
   ]

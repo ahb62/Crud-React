@@ -4,8 +4,12 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import useStyles from '../../../styles/styles';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import {useAuth0} from '@auth0/auth0-react';
+import { Profile } from './Profile';
 export default function Dropdown() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const {logout} = useAuth0();
+  const {loginWithRedirect} = useAuth0();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -14,6 +18,22 @@ export default function Dropdown() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleLogin = () =>
+  {
+    loginWithRedirect();
+    setAnchorEl(null);
+    return
+  }
+
+  const handleLogout = () =>
+  {
+    logout({returnTo: window.location.origin});
+    setAnchorEl(null);
+    return
+  }
+
+
   const styles = useStyles();
   return (
     <div>
@@ -28,9 +48,9 @@ export default function Dropdown() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem  className={styles.appBarDropdownMenu} onClick={handleClose}>Profile</MenuItem>
-        <MenuItem  className={styles.appBarDropdownMenu} onClick={handleClose}>My account</MenuItem>
-        <MenuItem  className={styles.appBarDropdownMenu} onClick={handleClose}>Logout</MenuItem>
+        <MenuItem  className={styles.appBarDropdownMenu} onClick={handleClose}><Profile /></MenuItem>
+        <MenuItem  className={styles.appBarDropdownMenu} onClick={handleLogin}>Login</MenuItem>
+        <MenuItem  className={styles.appBarDropdownMenu} onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
   );

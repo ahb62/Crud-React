@@ -7,7 +7,6 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {ThemeProvider, createTheme} from '@material-ui/core/styles';
 import {ComponentDrawer} from './modules/shared/components/Drawer';
 import  EditDialog  from './modules/shared/components/EditDialog';
-
 const theme = createTheme({
   palette: 
   {
@@ -25,7 +24,7 @@ const theme = createTheme({
       },
   },
 });
- 
+
 const App = () => 
 {
 const [tasks, setTasks] = useState([]);
@@ -35,7 +34,7 @@ useEffect(() => {
     {
       const reqApi = async () => 
       {
-        const result = await axios.get('http://192.168.1.104:3001/tasks/');
+        const result = await axios.get('http://localhost:3001/tasks/');
         setTasks(result.data); 
       }
       reqApi();
@@ -55,7 +54,9 @@ return (
               const idTask = parseInt(props.match.params.id);
               const task = tasks.filter(element => element.id === idTask);
               return(
+                <>
                 <TasksView tasks={tasks} task={task[0]} setTriggering={setTriggering}  />
+                </>
               )
             }} />
 
