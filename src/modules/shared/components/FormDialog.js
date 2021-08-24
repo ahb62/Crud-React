@@ -2,38 +2,45 @@ import React, {useState} from 'react';
 import {Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle, Fab, Tooltip} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import useStyles from '../../../styles/styles'
-import axios from 'axios';
+import gql from 'graphql-tag';
+import {graphql} from 'react-apollo';
 
-const FormDialog = ({setTriggering}) => 
+const FormDialog = ({setTriggering, tasking, taskCreate,  refetch}) => 
 {
   /*  */
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {setOpen(true)}; 
   const handleClose = () => {setOpen(false)};
   /*  */
-  const [taskName, saveTasksName] = useState("");
-  const [priorityLevel, savePriorityLevel] = useState("");
-  const handleSubmit = async (event) =>
-  { 
+  const [tasks, setTasks] = useState({
+    taskName: "",
+    priorityLevel: "",
+  });
+
+
+  const onChangeTask = (event) => 
+  {
     event.preventDefault();
-    console.log("you clicked on create!", taskName, priorityLevel);
-    try 
-    {
-      const result = await axios.post('http://192.168.1.104:3001/tasks', 
-      { 
-        taskName,
-        priorityLevel,
-      });
-      if(result.status === 201)
-        {console.log("has posteado correctamente en tu api")}
-    } catch (error) 
+    const {target: {name, value}} = event;
+    setTasks(
       {
-        console.log(error);
-        console.log("has tenido un error!");
-      }
-      setTriggering(true);
+        ...tasks,
+        [name]: value,
+      });
   }
-       
+
+    const submit = async tasking =>
+    {
+      const res = await taskCreate({variables: {data: tasking}});
+      if(res.data.taskCreate.id)
+      {
+        console.log("has posteado correctamente en tu api");
+        setTasks({taskName: '', priorityLevel: ''});
+        refetch()
+      } 
+      setTriggering(true);
+    }
+  
       
       
   const styles = useStyles();
@@ -45,25 +52,29 @@ const FormDialog = ({setTriggering}) =>
         </Fab>
       </Tooltip>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-      <form onSubmit={handleSubmit}>
-        <DialogTitle id="form-dialog-title">Add Task:</DialogTitle>
+      <form onSubmit={submit}>
+        <DialogTitle id="form-dialog-title">Create Task</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
             id="taskName"
             label="Task Name"
+            name="taskName"
             type="text"
+            value={tasks.taskName}
             fullWidth
-            onChange={e => saveTasksName(e.target.value)}
+            onChange={onChangeTask}
             />
           <TextField
             margin="dense"
             id="priorityLevel"
             label="Priority"
+            name="priorityLevel"
             type="text"
+            value={tasks.priorityLevel}
             fullWidth
-            onChange={e => savePriorityLevel(e.target.value)}
+            onChange={onChangeTask}
             />
         </DialogContent>
         <DialogActions>
@@ -76,4 +87,13 @@ const FormDialog = ({setTriggering}) =>
     </>
   );
 }
-export default FormDialog;
+const NOTE_MUTATION = gql`
+  mutation TaskCreate($data: TaskCreateInput!) {
+    taskCreate(data: $data) {
+      id
+    }
+  }
+`;
+export default graphql(NOTE_MUTATION, {
+  name: 'taskCreate',
+})(FormDialog);

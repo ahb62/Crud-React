@@ -1,7 +1,6 @@
 import React from 'react';
 import {TableTasks} from './components/TableTasks';
 import {ComponentDrawer} from '../shared/components/Drawer';
-import FormDialog from '../shared/components/FormDialog';
 import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) =>
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme) =>
 }));
 export const TasksView = (props) => 
 {
-    const {tasks, task, setTriggering} = props;
+    const {tasks, task, setTriggering, refetch, tasking} = props;
     const classes = useStyles();
     return(
         <>
@@ -29,10 +28,10 @@ export const TasksView = (props) =>
         <main className={classes.content}>
         <div className={classes.toolbar} />
             <h1>Task List</h1>
-            <TableTasks tasks={tasks} task={task} setTriggering={setTriggering}  />
+            <TableTasks tasks={tasking} refetch={refetch} tasking={tasks} task={task} setTriggering={setTriggering}  />
+        
         </main>
         </div>
-        <FormDialog defaultData={console.log} setTriggering={setTriggering} />
         </>
     )
 };

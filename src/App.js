@@ -1,12 +1,14 @@
 /* import ClippedDrawer from "./components/Drawer"; */
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import gql from 'graphql-tag';
+import {graphql} from 'react-apollo';
 import {TasksView} from "./modules/tasks/TasksView";
 import {WelcomeView} from "./modules/tasks/WelcomeView";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {ThemeProvider, createTheme} from '@material-ui/core/styles';
 import {ComponentDrawer} from './modules/shared/components/Drawer';
 import  EditDialog  from './modules/shared/components/EditDialog';
+import FormDialog from './modules/shared/components/FormDialog';
 
 const theme = createTheme({
   palette: 
@@ -26,22 +28,19 @@ const theme = createTheme({
   },
 });
  
-const App = () => 
+const App = ({tasks, refetch}) => 
 {
-const [tasks, setTasks] = useState([]);
+const [stateTasks, setTasks] = useState([]);
 const [triggerTasks, setTriggering ] = useState(true);
-useEffect(() => {
+useEffect(() => 
+{
   if(triggerTasks === true) 
     {
-      const reqApi = async () => 
-      {
-        const result = await axios.get('http://192.168.1.104:3001/tasks/');
-        setTasks(result.data); 
-      }
-      reqApi();
+      setTasks(tasks); 
     }
     setTriggering(false);
-}, [triggerTasks]);
+}, [tasks, triggerTasks]);
+
 return (
     <>
     <Router>
@@ -55,7 +54,11 @@ return (
               const idTask = parseInt(props.match.params.id);
               const task = tasks.filter(element => element.id === idTask);
               return(
-                <TasksView tasks={tasks} task={task[0]} setTriggering={setTriggering}  />
+                <>
+                <TasksView tasks={stateTasks} task={task[0]} setTriggering={setTriggering} refetch={refetch} tasking={tasks} />
+
+                <FormDialog  tasking={tasks} tasks={stateTasks} refetch={refetch} defaultData={console.log} setTriggering={setTriggering} />
+                </>
               )
             }} />
 
@@ -67,5 +70,36 @@ return (
     </>
   );
 }
-export default App;
- 
+const TASK_LIST_QUERY = gql`
+  query
+  {
+    tasksList
+    {
+      items
+      {
+        id
+        taskName
+        priorityLevel
+        completed
+      }
+    }
+  }
+`
+export default graphql(TASK_LIST_QUERY, 
+  {
+    props: (result) =>
+    {
+      const {data} = result;
+      const {loading, refetch} = data;
+      let tasks = [];
+      if (data && data.tasksList)
+      {
+        tasks = data.tasksList.items;
+        console.log(data, tasks);
+      } 
+        
+      return{
+        loading, tasks, refetch,
+      }
+    }
+  })(App);

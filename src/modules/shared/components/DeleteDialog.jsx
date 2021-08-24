@@ -7,7 +7,6 @@ export const DeleteDialog = ({idTask, tasks, task, setTriggering}) =>
 {
   let history = useHistory();
   const [open, setOpen] = useState(false);
-  const [idRow, setDeletingIdRow] = useState(idTask);
 /* Handling the  */
   const handleClickOpen = () => {
     setOpen(true)

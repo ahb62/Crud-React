@@ -12,7 +12,7 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
  
-export const TableTasks = ({tasks, task, setTriggering}) =>
+export const TableTasks = ({tasks, task, tasking, setTriggering, refetch}) =>
 {
   const styles = useStyles();
   return (
@@ -28,7 +28,7 @@ export const TableTasks = ({tasks, task, setTriggering}) =>
           </TableRow>
         </TableHead>
         <TableBody>
-           {tasks.map((row) => (
+          {tasks.map((row) => (
               <StyledTableRow key={row.id}>
               <TableCell component="th" scope="row">
                 {row.taskName}
@@ -36,7 +36,7 @@ export const TableTasks = ({tasks, task, setTriggering}) =>
               <TableCell>{row.priorityLevel}</TableCell>
               <TableCell>{row.completed}</TableCell>
               <TableCell>
-                <TableButtons tasks={tasks} idTask={row.id} task={task} setTriggering={setTriggering} />
+                <TableButtons refetch={refetch} tasks={tasks} idTask={row.id} task={task} tasking={tasks} setTriggering={setTriggering} />
               </TableCell>
             </StyledTableRow>
           ))}
